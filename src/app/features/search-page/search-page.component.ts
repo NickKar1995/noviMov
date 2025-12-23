@@ -103,6 +103,7 @@ export class SearchPageComponent {
   }
 
   protected onMovieClick(movie: Movie): void {
+    console.log('lol')
     this.router.navigate(['/movie', movie.id]);
   }
 

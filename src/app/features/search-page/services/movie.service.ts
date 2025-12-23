@@ -6,14 +6,15 @@ import { RatingResponse } from '../models/RatingResponse';
 import { SearchResponse } from '../models/SearchResponse';
 import { MovieDetails } from '../models/MovieDetails';
 import { GuestSessionResponse } from '../models/GuestSessionResponse';
+import { TMDB_API_KEY, TMDB_BASE_URL } from '../../../core/Tokens/EnvironmentToken';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MovieService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = environment.tmdb.baseUrl;
-  private readonly apiKey = environment.tmdb.apiKey;
+  private readonly baseUrl = inject(TMDB_BASE_URL);
+  private readonly apiKey = inject(TMDB_API_KEY);
 
   searchMovies(query: string, page = 1): Observable<SearchResponse> {
     const params = new HttpParams()
