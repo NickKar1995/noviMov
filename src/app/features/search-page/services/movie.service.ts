@@ -1,16 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import {
-  GuestSessionResponse,
-  MovieDetails,
-  RatingResponse,
-  SearchResponse
-} from '../models/movie.model';
+import { environment } from '../../../../environments/environment';
+import { RatingResponse } from '../models/RatingResponse';
+import { SearchResponse } from '../models/SearchResponse';
+import { MovieDetails } from '../models/MovieDetails';
+import { GuestSessionResponse } from '../models/GuestSessionResponse';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MovieService {
   private readonly http = inject(HttpClient);
@@ -34,7 +32,7 @@ export class MovieService {
   createGuestSession(): Observable<GuestSessionResponse> {
     const params = new HttpParams().set('api_key', this.apiKey);
     return this.http.get<GuestSessionResponse>(`${this.baseUrl}/authentication/guest_session/new`, {
-      params
+      params,
     });
   }
 
@@ -46,7 +44,7 @@ export class MovieService {
     return this.http.post<RatingResponse>(
       `${this.baseUrl}/movie/${movieId}/rating`,
       { value: rating },
-      { params }
+      { params },
     );
   }
 

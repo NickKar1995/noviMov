@@ -10,10 +10,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { MovieService } from '../../services/movie.service';
-import { Movie, SearchResponse } from '../../models/movie.model';
-import { MovieCardComponent } from '../../components/movie-card/movie-card.component';
-import { AlphanumericDirective } from '../../directives/alphanumeric.directive';
+import { MovieService } from './services/movie.service';
+import { MovieCardComponent } from './components/movie-card/movie-card.component';
+import { AlphanumericDirective } from '../../core/directives/alphanumeric.directive';
+import { Movie } from './models/Movie';
+import { SearchResponse } from './models/SearchResponse';
 
 @Component({
   selector: 'app-search-page',
