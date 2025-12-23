@@ -1,0 +1,146 @@
+<div class="search-page">
+  <div class="search-page__header">
+    <h1 class="search-page__title">
+      <mat-icon class="search-page__title-icon">movie</mat-icon>
+      noviMov - Movie Search
+    </h1>
+
+    <div class="search-page__search-box">
+      <mat-form-field appearance="outline" class="search-page__form-field">
+        <mat-label>Search for movies</mat-label>
+        <input
+          #searchInput="ngModel"
+          appAlphanumeric
+          matInput
+          placeholder="Type at least 3 alphanumeric characters..."
+          type="text"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchChange($event)"
+        />
+        <mat-icon matPrefix>search</mat-icon>
+        @if (searchQuery()) {
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="searchQuery.set(''); onSearchChange('')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+        @if (searchInput.invalid && searchInput.touched) {
+          <mat-error>
+            @if (searchInput.errors?.['minlength']) {
+              Minimum 3 characters required ({{ searchInput.errors?.['minlength'].actualLength }}/{{
+                searchInput.errors?.['minlength'].requiredLength
+              }})
+            }
+            @if (searchInput.errors?.['alphanumeric']) {
+              Only letters, numbers and spaces allowed
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="search-page__loading">
+      <mat-spinner diameter="60" />
+      <p>Searching for movies...</p>
+    </div>
+  }
+
+  @if (hasError()) {
+    <div class="search-page__error-message">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ error() }}</p>
+    </div>
+  }
+
+  @if (hasResults() && !isLoading()) {
+    @if (canAddToCollection()) {
+      <div class="search-page__actions">
+        <mat-chip-set>
+          <mat-chip class="search-page__chip">
+            <mat-icon matChipAvatar>check_circle</mat-icon>
+            {{ selectedCount() }} movie{{ selectedCount() > 1 ? 's' : '' }} selected
+          </mat-chip>
+        </mat-chip-set>
+        <button
+          class="search-page__btn-collection"
+          color="primary"
+          mat-raised-button
+          type="button"
+          (click)="onAddToCollection()"
+        >
+          <mat-icon>add</mat-icon>
+          Add to Collection
+        </button>
+      </div>
+    }
+
+    <div class="search-page__results">
+      @for (movie of movies(); track movie.id) {
+        <app-movie-card
+          [movie]="movie"
+          [selected]="isMovieSelected(movie.id)"
+          (movieClick)="onMovieClick($event)"
+          (selectionChange)="onSelectionChange($event)"
+        />
+      }
+    </div>
+
+    @if (totalPages() > 1) {
+      <div class="search-page__pagination">
+        <button
+          class="search-page__page-btn"
+          color="primary"
+          mat-button
+          type="button"
+          [disabled]="currentPage() === 1"
+          (click)="onPageChange(currentPage() - 1)"
+        >
+          <mat-icon>chevron_left</mat-icon>
+          Previous
+        </button>
+
+        @for (page of getPageNumbers(); track $index) {
+          @if (page === -1) {
+            <span class="search-page__ellipsis">...</span>
+          } @else {
+            <button
+              mat-button
+              type="button"
+              [class.search-page__page-btn--active]="page === currentPage()"
+              [color]="page === currentPage() ? 'primary' : undefined"
+              (click)="onPageChange(page)"
+            >
+              {{ page }}
+            </button>
+          }
+        }
+
+        <button
+          class="search-page__page-btn"
+          color="primary"
+          mat-button
+          type="button"
+          [disabled]="currentPage() === totalPages()"
+          (click)="onPageChange(currentPage() + 1)"
+        >
+          Next
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    }
+  }
+
+  @if (!hasResults() && !isLoading() && searchQuery().length >= 3) {
+    <div class="search-page__no-results">
+      <mat-icon class="search-page__no-results-icon">search_off</mat-icon>
+      <p>No movies found for "{{ searchQuery() }}"</p>
+      <p class="search-page__no-results-hint">Try a different search term</p>
+    </div>
+  }
+</div>

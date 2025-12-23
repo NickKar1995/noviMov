@@ -1,0 +1,28 @@
+<mat-card
+  class="movie-card"
+  role="button"
+  tabindex="0"
+  (click)="onMovieClick()"
+  (keydown.enter)="onMovieClick()"
+>
+  <div class="movie-card__checkbox">
+    <mat-checkbox
+      color="primary"
+      [checked]="selected()"
+      (change)="onSelectionChange($any($event).checked)"
+      (click)="$event.stopPropagation()"
+    />
+  </div>
+
+  <mat-card-header class="movie-card__poster">
+    <img mat-card-image [alt]="movie().title" [src]="getImageUrl(movie().poster_path)" />
+  </mat-card-header>
+
+  <mat-card-content class="movie-card__content">
+    <h3 class="movie-card__title">{{ movie().title }}</h3>
+    <div class="movie-card__rating">
+      <mat-icon class="movie-card__rating-icon">star</mat-icon>
+      <span class="movie-card__rating-value">{{ movie().vote_average | number: '1.1-1' }}</span>
+    </div>
+  </mat-card-content>
+</mat-card>
