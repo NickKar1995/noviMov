@@ -1,0 +1,122 @@
+<div class="movie-details">
+  <button
+    class="movie-details__close"
+    mat-dialog-close
+    mat-icon-button
+    type="button"
+    (click)="onClose()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+
+  @if (isLoading()) {
+    <div class="movie-details__loading">
+      <mat-spinner diameter="60" />
+      <p>Loading movie details...</p>
+    </div>
+  }
+
+  @if (hasError()) {
+    <div class="movie-details__error">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ error() }}</p>
+      <button color="primary" mat-raised-button type="button" (click)="onClose()">Close</button>
+    </div>
+  }
+
+  @if (movie() && !isLoading()) {
+    <div class="movie-details__content">
+      <div class="movie-details__poster-section">
+        <img
+          class="movie-details__poster"
+          [alt]="movie()!.title"
+          [src]="getImageUrl(movie()!.poster_path)"
+        />
+      </div>
+
+      <div class="movie-details__info">
+        <h1 class="movie-details__title">{{ movie()!.title }}</h1>
+
+        <div class="movie-details__meta">
+          <mat-chip-set>
+            <mat-chip>
+              <mat-icon matChipAvatar>calendar_today</mat-icon>
+              {{ formattedDate() }}
+            </mat-chip>
+            <mat-chip>
+              <mat-icon matChipAvatar>star</mat-icon>
+              {{ movie()!.vote_average | number: '1.1-1' }} ({{ movie()!.vote_count }} votes)
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+
+        <div class="movie-details__section">
+          <h2 class="movie-details__section-title">Overview</h2>
+          <p class="movie-details__overview">
+            {{ movie()!.overview || 'No overview available.' }}
+          </p>
+        </div>
+
+        <div class="movie-details__section">
+          <h2 class="movie-details__section-title">Financial Information</h2>
+          <div class="movie-details__grid">
+            <div class="movie-details__stat">
+              <mat-icon>attach_money</mat-icon>
+              <div>
+                <span class="movie-details__stat-label">Budget</span>
+                <span class="movie-details__stat-value">{{ formattedBudget() }}</span>
+              </div>
+            </div>
+            <div class="movie-details__stat">
+              <mat-icon>trending_up</mat-icon>
+              <div>
+                <span class="movie-details__stat-label">Revenue</span>
+                <span class="movie-details__stat-value">{{ formattedRevenue() }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="movie-details__section">
+          <h2 class="movie-details__section-title">Languages</h2>
+          <p class="movie-details__languages">{{ languages() }}</p>
+        </div>
+
+        <div class="movie-details__section movie-details__rating-section">
+          <h2 class="movie-details__section-title">Rate this Movie</h2>
+          <div class="movie-details__rating-control">
+            <div class="movie-details__rating-slider">
+              <mat-slider discrete [max]="10" [min]="0.5" [step]="0.5">
+                <input matSliderThumb [(ngModel)]="userRating" />
+              </mat-slider>
+            </div>
+            <div class="movie-details__rating-value">
+              <mat-icon>star</mat-icon>
+              <span>{{ formatRatingValue(userRating()) }}</span>
+            </div>
+          </div>
+          <button
+            class="movie-details__submit-rating"
+            color="accent"
+            mat-raised-button
+            type="button"
+            [disabled]="isSubmittingRating()"
+            (click)="onSubmitRating()"
+          >
+            @if (isSubmittingRating()) {
+              <mat-spinner diameter="20" />
+              <span>Submitting...</span>
+            } @else {
+              <ng-container>
+                <div class="movie-details__button-content">
+                  <mat-icon>send</mat-icon>
+                  <span>Submit Rating</span>
+                </div>
+              </ng-container>
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

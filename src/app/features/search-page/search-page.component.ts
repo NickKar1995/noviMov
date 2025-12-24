@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { catchError, debounceTime, of, Subject, switchMap } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, debounceTime, filter, of, Subject, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,11 +10,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
 import { MovieService } from './services/movie.service';
 import { MovieCardComponent } from './components/movie-card/movie-card.component';
 import { AlphanumericDirective } from '../../core/directives/alphanumeric.directive';
 import { Movie } from './models/Movie';
 import { SearchResponse } from './models/SearchResponse';
+import { MovieDetailsDialogComponent } from '../movie-details/movie-details-dialog.component';
 
 @Component({
   selector: 'app-search-page',
@@ -32,11 +34,13 @@ import { SearchResponse } from './models/SearchResponse';
   ],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchPageComponent {
+export class SearchPageComponent implements OnInit {
   private readonly movieService = inject(MovieService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly dialog = inject(MatDialog);
   private readonly searchSubject = new Subject<{ query: string; page: number }>();
 
   protected readonly searchQuery = signal('');
@@ -54,6 +58,29 @@ export class SearchPageComponent {
 
   constructor() {
     this.setupSearch();
+    this.setupRouteListener();
+  }
+
+  ngOnInit(): void {
+    // Check if there's a movieId in the route on init
+    const movieId = this.route.snapshot.params['id'];
+    if (movieId) {
+      this.openMovieDialog(+movieId);
+    }
+  }
+
+  private setupRouteListener(): void {
+    this.route.params
+      .pipe(
+        filter((params) => !!params['id']),
+        takeUntilDestroyed(),
+      )
+      .subscribe((params) => {
+        const movieId = +params['id'];
+        if (movieId) {
+          this.openMovieDialog(movieId);
+        }
+      });
   }
 
   private setupSearch(): void {
@@ -103,8 +130,22 @@ export class SearchPageComponent {
   }
 
   protected onMovieClick(movie: Movie): void {
-    console.log('lol')
     this.router.navigate(['/movie', movie.id]);
+  }
+
+  private openMovieDialog(movieId: number): void {
+    const dialogRef = this.dialog.open(MovieDetailsDialogComponent, {
+      data: { movieId },
+      width: '90vw',
+      maxWidth: '1000px',
+      maxHeight: '90vh',
+      panelClass: 'movie-details-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      // Navigate back to search page when dialog closes
+      this.router.navigate(['/']);
+    });
   }
 
   protected onSelectionChange(event: { movie: Movie; selected: boolean }): void {
