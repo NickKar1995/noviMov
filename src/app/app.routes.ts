@@ -7,11 +7,6 @@ export const routes: Routes = [
       import('./features/search-page/search-page.component').then((m) => m.SearchPageComponent),
   },
   {
-    path: 'movie/:id',
-    loadComponent: () =>
-      import('./features/search-page/search-page.component').then((m) => m.SearchPageComponent),
-  },
-  {
     path: '**',
     redirectTo: '',
   },

@@ -16,7 +16,7 @@ import { MovieCardComponent } from './components/movie-card/movie-card.component
 import { AlphanumericDirective } from '../../core/directives/alphanumeric.directive';
 import { Movie } from './models/Movie';
 import { SearchResponse } from './models/SearchResponse';
-import { MovieDetailsDialogComponent } from '../movie-details/movie-details-dialog.component';
+import { MovieDetailsDialogComponent } from './components/movie-details/movie-details-dialog.component';
 
 @Component({
   selector: 'app-search-page',
@@ -62,21 +62,21 @@ export class SearchPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Check if there's a movieId in the route on init
-    const movieId = this.route.snapshot.params['id'];
+    // Check if there's a movieId in the query params on init
+    const movieId = this.route.snapshot.queryParams['movieId'];
     if (movieId) {
       this.openMovieDialog(+movieId);
     }
   }
 
   private setupRouteListener(): void {
-    this.route.params
+    this.route.queryParams
       .pipe(
-        filter((params) => !!params['id']),
+        filter((params) => !!params['movieId']),
         takeUntilDestroyed(),
       )
       .subscribe((params) => {
-        const movieId = +params['id'];
+        const movieId = +params['movieId'];
         if (movieId) {
           this.openMovieDialog(movieId);
         }
@@ -130,7 +130,11 @@ export class SearchPageComponent implements OnInit {
   }
 
   protected onMovieClick(movie: Movie): void {
-    this.router.navigate(['/movie', movie.id]);
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { movieId: movie.id },
+      queryParamsHandling: 'merge',
+    });
   }
 
   private openMovieDialog(movieId: number): void {
@@ -143,8 +147,12 @@ export class SearchPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      // Navigate back to search page when dialog closes
-      this.router.navigate(['/']);
+      // Remove movieId query param when dialog closes
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { movieId: null },
+        queryParamsHandling: 'merge',
+      });
     });
   }
 

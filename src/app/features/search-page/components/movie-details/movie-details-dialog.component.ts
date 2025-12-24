@@ -16,10 +16,10 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { catchError, finalize, of, switchMap } from 'rxjs';
-import { MovieService } from '../search-page/services/movie.service';
-import { MovieDetails } from '../search-page/models/MovieDetails';
-import { GuestSessionService } from '../../core/services/guest-session.service';
-import type { SpokenLanguage } from '../search-page/models/SpokenLanguge';
+import { MovieService } from '../../services/movie.service';
+import { MovieDetails } from '../../models/MovieDetails';
+import { GuestSessionService } from '../../../../core/services/guest-session.service';
+import type { SpokenLanguage } from '../../models/SpokenLanguge';
 
 export type MovieDetailsDialogData = {
   movieId: number;
