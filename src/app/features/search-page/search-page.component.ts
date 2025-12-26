@@ -15,13 +15,17 @@ import { MovieCardComponent } from './components/movie-card/movie-card.component
 import { AlphanumericDirective } from '../../core/directives/alphanumeric.directive';
 import { Movie } from './models/Movie';
 import { SearchResponse } from './models/SearchResponse';
-import { getPaginationPages, isValidPageChange } from './utils/pagination.helper';
+import {
+  COLLECTION_DIALOG_CONFIG,
+  MOVIE_DETAILS_DIALOG_CONFIG,
+} from '../../core/constants/dialog-config.constants';
 import {
   MovieDetailsDialogComponent,
 } from './components/movie-details/movie-details-dialog.component';
 import {
   AddToCollectionDialogComponent,
 } from './components/add-to-collection-dialog/add-to-collection-dialog.component';
+import { getPaginationPages, isValidPageChange } from './utils/pagination.helper';
 
 @Component({
   selector: 'app-search-page',
@@ -137,11 +141,8 @@ export class SearchPageComponent {
 
   private openMovieDialog(movieId: number): void {
     const dialogRef = this.dialog.open(MovieDetailsDialogComponent, {
+      ...MOVIE_DETAILS_DIALOG_CONFIG,
       data: { movieId },
-      width: '90vw',
-      maxWidth: '1000px',
-      maxHeight: '90vh',
-      panelClass: 'movie-details-dialog',
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -172,9 +173,8 @@ export class SearchPageComponent {
     const selectedMoviesList = this.movies().filter((m) => this.selectedMovies().has(m.id));
     
     const dialogRef = this.dialog.open(AddToCollectionDialogComponent, {
+      ...COLLECTION_DIALOG_CONFIG,
       data: { movies: selectedMoviesList },
-      width: '600px',
-      maxWidth: '90vw',
     });
 
     dialogRef.afterClosed().subscribe((result) => {

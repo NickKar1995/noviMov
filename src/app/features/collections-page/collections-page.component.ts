@@ -11,6 +11,7 @@ import {
   CreateCollectionDialogComponent
 } from './components/create-collection-dialog/create-collection-dialog.component';
 import { MovieCollection } from './models/MovieCollection';
+import { COLLECTION_DIALOG_CONFIG } from '../../core/constants/dialog-config.constants';
 
 @Component({
   selector: 'app-collections-page',
@@ -28,11 +29,7 @@ export class CollectionsPageComponent {
   protected readonly hasCollections = computed(() => this.collections().length > 0);
 
   protected onCreateCollection(): void {
-    const dialogRef = this.dialog.open(CreateCollectionDialogComponent, {
-      width: '500px',
-      maxWidth: '90vw',
-      disableClose: true,
-    });
+    const dialogRef = this.dialog.open(CreateCollectionDialogComponent, COLLECTION_DIALOG_CONFIG);
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

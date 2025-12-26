@@ -7,13 +7,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CollectionsService } from '../../services/collections.service';
 import { Movie } from '../../../search-page/models/Movie';
-import {
-  MovieCardComponent
-} from '../../../search-page/components/movie-card/movie-card.component';
-import {
-  MovieDetailsDialogComponent
-} from '../../../search-page/components/movie-details/movie-details-dialog.component';
+import { MovieCardComponent } from '../../../search-page/components/movie-card/movie-card.component';
+import { MovieDetailsDialogComponent } from '../../../search-page/components/movie-details/movie-details-dialog.component';
 import { MovieCollection } from '../../models/MovieCollection';
+import { MOVIE_DETAILS_DIALOG_CONFIG } from '../../../../core/constants/dialog-config.constants';
 
 @Component({
   selector: 'app-collection-details-page',
@@ -39,6 +36,10 @@ export class CollectionDetailsPageComponent implements OnInit {
   protected readonly notFound = signal(false);
 
   ngOnInit(): void {
+    this.detailsPageInitialization();
+  }
+
+  private detailsPageInitialization(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       const foundCollection = this.collectionsService.getCollection(id);
@@ -77,8 +78,7 @@ export class CollectionDetailsPageComponent implements OnInit {
 
   protected onViewMovieDetails(movie: Movie): void {
     this.dialog.open(MovieDetailsDialogComponent, {
-      width: '800px',
-      maxWidth: '95vw',
+      ...MOVIE_DETAILS_DIALOG_CONFIG,
       data: { movieId: movie.id },
     });
   }
