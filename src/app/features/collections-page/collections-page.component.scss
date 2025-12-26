@@ -15,7 +15,7 @@
   &__title {
     font-size: 32px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--color-text-primary);
     margin: 0;
     display: flex;
     align-items: center;
@@ -26,7 +26,7 @@
     font-size: 40px;
     width: 40px;
     height: 40px;
-    color: #3f51b5;
+    color: var(--color-primary);
   }
 
   &__create-btn {
@@ -46,13 +46,13 @@
     h2 {
       font-size: 24px;
       font-weight: 600;
-      color: #333;
+      color: var(--color-text-secondary);
       margin: 0;
     }
 
     p {
       font-size: 16px;
-      color: #666;
+      color: var(--color-text-muted);
       margin: 0 0 16px 0;
     }
   }
@@ -61,7 +61,7 @@
     font-size: 80px;
     width: 80px;
     height: 80px;
-    color: #999;
+    color: var(--color-text-disabled);
   }
 
   &__grid {
@@ -76,11 +76,11 @@
 
     &:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--shadow-lg);
     }
 
     &:focus {
-      outline: 2px solid #3f51b5;
+      outline: 2px solid var(--color-primary);
       outline-offset: 2px;
     }
 
@@ -92,8 +92,8 @@
       font-size: 40px;
       width: 40px;
       height: 40px;
-      background: #e8eaf6;
-      color: #3f51b5;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -102,7 +102,7 @@
   }
 
   &__description {
-    color: #555;
+    color: var(--color-text-tertiary);
     line-height: 1.6;
     margin-bottom: 16px;
     overflow: hidden;

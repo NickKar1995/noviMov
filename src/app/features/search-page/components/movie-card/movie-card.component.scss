@@ -9,11 +9,11 @@
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-lg);
   }
 
   &:focus {
-    outline: 2px solid #3f51b5;
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
@@ -22,7 +22,7 @@
     top: 8px;
     right: 8px;
     z-index: 10;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--overlay-dark);
     border-radius: 4px;
     padding: 4px;
 
@@ -59,7 +59,7 @@
     font-size: 16px;
     font-weight: 600;
     margin: 0 0 8px 0;
-    color: #333;
+    color: var(--color-text-secondary);
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -80,13 +80,13 @@
     font-size: 18px;
     width: 18px;
     height: 18px;
-    color: #ffa726;
+    color: var(--color-rating);
   }
 
   &__rating-value {
     font-size: 14px;
     font-weight: 500;
-    color: #666;
+    color: var(--color-text-muted);
   }
 }
 

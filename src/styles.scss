@@ -21,6 +21,50 @@ $novi-mov-theme: mat.m2-define-light-theme(
 
 @include mat.all-component-themes($novi-mov-theme);
 
+// CSS Custom Properties (Variables)
+:root {
+  // Primary colors
+  --color-primary: #3f51b5;
+  --color-primary-light: #e8eaf6;
+  --color-accent: #ff4081;
+  --color-warn: #f44336;
+  
+  // Text colors
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #333;
+  --color-text-tertiary: #555;
+  --color-text-muted: #666;
+  --color-text-disabled: #999;
+  
+  // Error colors
+  --color-error: #c62828;
+  --color-error-dark: #b71c1c;
+  --color-error-light: #ffebee;
+  --color-error-border: #ef9a9a;
+  
+  // Background colors
+  --color-bg-body: #f5f5f5;
+  --color-bg-card: #ffffff;
+  --color-bg-hover: #fafafa;
+  
+  // Border colors
+  --color-border: #e0e0e0;
+  
+  // Rating color
+  --color-rating: #ffa726;
+  
+  // Shadows
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+  
+  // Overlays
+  --overlay-light: rgba(255, 255, 255, 0.1);
+  --overlay-medium: rgba(255, 255, 255, 0.2);
+  --overlay-dark: rgba(255, 255, 255, 0.9);
+  --overlay-full: rgba(255, 255, 255, 1);
+}
+
 // Global styles
 * {
   box-sizing: border-box;
@@ -36,5 +80,5 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: #f5f5f5;
+  background-color: var(--color-bg-body);
 }

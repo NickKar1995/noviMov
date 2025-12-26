@@ -10,7 +10,7 @@
   &__title {
     font-size: 32px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--color-text-primary);
     margin: 0 0 24px 0;
     text-align: center;
     display: flex;
@@ -23,7 +23,7 @@
     font-size: 40px;
     width: 40px;
     height: 40px;
-    color: #3f51b5;
+    color: var(--color-primary);
   }
 
   &__search-box {
@@ -45,15 +45,15 @@
     gap: 16px;
 
     p {
-      color: #666;
+      color: var(--color-text-muted);
       font-size: 16px;
       margin-top: 8px;
     }
   }
 
   &__error-message {
-    background: #ffebee;
-    border: 1px solid #ef9a9a;
+    background: var(--color-error-light);
+    border: 1px solid var(--color-error-border);
     border-radius: 8px;
     padding: 16px;
     margin: 20px auto;
@@ -63,11 +63,11 @@
     gap: 12px;
 
     mat-icon {
-      color: #c62828;
+      color: var(--color-error);
     }
 
     p {
-      color: #b71c1c;
+      color: var(--color-error-dark);
       margin: 0;
       flex: 1;
     }
@@ -120,26 +120,26 @@
 
   &__ellipsis {
     padding: 0 8px;
-    color: #666;
+    color: var(--color-text-muted);
   }
 
   &__no-results {
     text-align: center;
     padding: 60px 20px;
-    color: #666;
+    color: var(--color-text-muted);
   }
 
   &__no-results-icon {
     font-size: 64px;
     width: 64px;
     height: 64px;
-    color: #999;
+    color: var(--color-text-disabled);
     margin: 0 auto 16px;
   }
 
   &__no-results-hint {
     font-size: 14px;
-    color: #999;
+    color: var(--color-text-disabled);
     margin-top: 8px;
   }
 }

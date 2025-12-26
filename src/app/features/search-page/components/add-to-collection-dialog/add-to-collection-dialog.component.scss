@@ -9,12 +9,12 @@
     gap: 12px;
     font-size: 24px;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-text-primary);
     margin: 0 0 16px 0;
   }
 
   &__title-icon {
-    color: #3f51b5;
+    color: var(--color-primary);
     font-size: 28px;
     width: 28px;
     height: 28px;
@@ -22,7 +22,7 @@
 
   &__subtitle {
     font-size: 14px;
-    color: #555;
+    color: var(--color-text-tertiary);
     margin: 0 0 16px 0;
   }
 
@@ -36,7 +36,7 @@
 
     p {
       font-size: 14px;
-      color: #666;
+      color: var(--color-text-muted);
       margin: 0;
     }
   }
@@ -45,7 +45,7 @@
     font-size: 60px;
     width: 60px;
     height: 60px;
-    color: #999;
+    color: var(--color-text-disabled);
   }
 
   &__list {
