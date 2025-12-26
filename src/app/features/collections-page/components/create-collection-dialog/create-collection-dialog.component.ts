@@ -28,9 +28,9 @@ type CollectionForm = {
 export class CreateCollectionDialogComponent {
   private readonly dialogRef = inject(MatDialogRef<CreateCollectionDialogComponent>);
 
-  readonly isSubmitting = signal(false);
+  protected readonly isSubmitting = signal(false);
 
-  readonly form = new FormGroup<CollectionForm>({
+  protected readonly form = new FormGroup<CollectionForm>({
     title: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
@@ -41,13 +41,13 @@ export class CreateCollectionDialogComponent {
     }),
   });
 
-  onCancel(): void {
+  protected onCancel(): void {
     if (!this.isSubmitting()) {
       this.dialogRef.close();
     }
   }
 
-  onSubmit(): void {
+  protected onSubmit(): void {
     if (this.form.valid && !this.isSubmitting()) {
       this.isSubmitting.set(true);
       const formValue = this.form.getRawValue();
@@ -55,7 +55,7 @@ export class CreateCollectionDialogComponent {
     }
   }
 
-  getTitleError(): string {
+  protected getTitleError(): string {
     const control = this.form.controls.title;
     if (control.hasError('required')) {
       return 'Title is required';
@@ -69,7 +69,7 @@ export class CreateCollectionDialogComponent {
     return '';
   }
 
-  getDescriptionError(): string {
+  protected getDescriptionError(): string {
     const control = this.form.controls.description;
     if (control.hasError('maxlength')) {
       return 'Description must not exceed 200 characters';

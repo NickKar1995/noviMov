@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,7 +8,7 @@ import { Movie } from '../../models/Movie';
 
 @Component({
   selector: 'app-movie-card',
-  imports: [CommonModule, MatCardModule, MatCheckboxModule, MatIconModule],
+  imports: [DecimalPipe, MatCardModule, MatCheckboxModule, MatIconModule],
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

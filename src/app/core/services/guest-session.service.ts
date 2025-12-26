@@ -10,7 +10,7 @@ import { GUEST_SESSION_KEY, SESSION_EXPIRY_KEY } from '../Keys/Keys';
 export class GuestSessionService {
   private readonly movieService = inject(MovieService);
   readonly guestSessionId = signal<string | null>(null);
-  readonly isSessionActive = signal<boolean>(false);
+  readonly isSessionActive = signal(false);
 
   constructor() {
     this.loadSessionFromStorage();
@@ -29,22 +29,6 @@ export class GuestSessionService {
         this.clearSession();
       }
     }
-  }
-
-  createSession(): Observable<boolean> {
-    return this.movieService.createGuestSession().pipe(
-      tap((response) => {
-        if (response.success) {
-          this.guestSessionId.set(response.guest_session_id);
-          this.isSessionActive.set(true);
-
-          localStorage.setItem(GUEST_SESSION_KEY, response.guest_session_id);
-          localStorage.setItem(SESSION_EXPIRY_KEY, response.expires_at);
-        }
-      }),
-      map((response) => response.success),
-      catchError(() => of(false)),
-    );
   }
 
   getOrCreateSession(): Observable<string | null> {

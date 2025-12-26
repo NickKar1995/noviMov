@@ -6,7 +6,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,7 +28,7 @@ export type MovieDetailsDialogData = {
 @Component({
   selector: 'app-movie-details-dialog',
   imports: [
-    CommonModule,
+    DecimalPipe,
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
@@ -52,7 +52,7 @@ export class MovieDetailsDialogComponent implements OnInit {
   protected readonly movie = signal<MovieDetails | null>(null);
   protected readonly isLoading = signal(true);
   protected readonly error = signal<string | null>(null);
-  protected readonly userRating = signal<number>(5);
+  protected readonly userRating = signal(5);
   protected readonly isSubmittingRating = signal(false);
 
   protected readonly hasError = computed(() => this.error() !== null);

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -15,7 +14,7 @@ import { COLLECTION_DIALOG_CONFIG } from '../../core/constants/dialog-config.con
 
 @Component({
   selector: 'app-collections-page',
-  imports: [CommonModule, MatButtonModule, MatCardModule, MatIconModule, MatChipsModule],
+  imports: [MatButtonModule, MatCardModule, MatIconModule, MatChipsModule],
   templateUrl: './collections-page.component.html',
   styleUrl: './collections-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

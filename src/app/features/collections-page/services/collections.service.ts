@@ -3,7 +3,6 @@ import { Injectable, signal } from '@angular/core';
 import { Movie } from '../../search-page/models/Movie';
 import { MovieCollection } from '../models/MovieCollection';
 import { CreateCollectionDto } from '../models/CreateCollectionDto';
-import { UpdateCollectionDto } from '../models/UpdateCollectionDto';
 
 const COLLECTIONS_STORAGE_KEY = 'noviMov_collections';
 
@@ -51,25 +50,6 @@ export class CollectionsService {
 
   getCollection(id: string): MovieCollection | undefined {
     return this.collections().find((c) => c.id === id);
-  }
-
-  updateCollection(id: string, dto: UpdateCollectionDto): MovieCollection | null {
-    const collection = this.getCollection(id);
-    if (!collection) {
-      return null;
-    }
-
-    const updatedCollection: MovieCollection = {
-      ...collection,
-      ...dto,
-      updatedAt: new Date().toISOString(),
-    };
-
-    this.collections.update((collections) =>
-      collections.map((c) => (c.id === id ? updatedCollection : c)),
-    );
-    this.saveCollections();
-    return updatedCollection;
   }
 
   deleteCollection(id: string): boolean {
@@ -127,11 +107,6 @@ export class CollectionsService {
     );
     this.saveCollections();
     return true;
-  }
-
-  isMovieInCollection(collectionId: string, movieId: number): boolean {
-    const collection = this.getCollection(collectionId);
-    return collection ? collection.movies.some((m) => m.id === movieId) : false;
   }
 
   private generateId(): string {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -8,7 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { CollectionsService } from '../../services/collections.service';
 import { Movie } from '../../../search-page/models/Movie';
 import { MovieCardComponent } from '../../../search-page/components/movie-card/movie-card.component';
-import { MovieDetailsDialogComponent } from '../../../search-page/components/movie-details/movie-details-dialog.component';
+import {
+  MovieDetailsDialogComponent,
+} from '../../../search-page/components/movie-details/movie-details-dialog.component';
 import { MovieCollection } from '../../models/MovieCollection';
 import { MOVIE_DETAILS_DIALOG_CONFIG } from '../../../../core/constants/dialog-config.constants';
 
@@ -26,7 +28,7 @@ import { MOVIE_DETAILS_DIALOG_CONFIG } from '../../../../core/constants/dialog-c
   styleUrl: './collection-details-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CollectionDetailsPageComponent implements OnInit {
+export class CollectionDetailsPageComponent {
   private readonly collectionsService = inject(CollectionsService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -35,7 +37,7 @@ export class CollectionDetailsPageComponent implements OnInit {
   protected readonly collection = signal<MovieCollection | null>(null);
   protected readonly notFound = signal(false);
 
-  ngOnInit(): void {
+  constructor() {
     this.detailsPageInitialization();
   }
 
