@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, debounceTime, filter, of, Subject, switchMap } from 'rxjs';
@@ -16,32 +15,32 @@ import { MovieCardComponent } from './components/movie-card/movie-card.component
 import { AlphanumericDirective } from '../../core/directives/alphanumeric.directive';
 import { Movie } from './models/Movie';
 import { SearchResponse } from './models/SearchResponse';
+import { getPaginationPages, isValidPageChange } from './utils/pagination.helper';
 import {
-  MovieDetailsDialogComponent
+  MovieDetailsDialogComponent,
 } from './components/movie-details/movie-details-dialog.component';
 import {
-  AddToCollectionDialogComponent
+  AddToCollectionDialogComponent,
 } from './components/add-to-collection-dialog/add-to-collection-dialog.component';
 
 @Component({
   selector: 'app-search-page',
   imports: [
-    CommonModule,
+    AlphanumericDirective,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
     MatChipsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
     MovieCardComponent,
-    AlphanumericDirective
   ],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchPageComponent implements OnInit {
+export class SearchPageComponent {
   private readonly movieService = inject(MovieService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
@@ -66,14 +65,6 @@ export class SearchPageComponent implements OnInit {
     this.setupRouteListener();
   }
 
-  ngOnInit(): void {
-    // Check if there's a movieId in the query params on init
-    const movieId = this.route.snapshot.queryParams['movieId'];
-    if (movieId) {
-      this.openMovieDialog(+movieId);
-    }
-  }
-
   private setupRouteListener(): void {
     this.route.queryParams
       .pipe(
@@ -81,10 +72,7 @@ export class SearchPageComponent implements OnInit {
         takeUntilDestroyed(),
       )
       .subscribe((params) => {
-        const movieId = +params['movieId'];
-        if (movieId) {
-          this.openMovieDialog(movieId);
-        }
+        this.openMovieDialog(+params['movieId']);
       });
   }
 
@@ -99,11 +87,16 @@ export class SearchPageComponent implements OnInit {
             catchError((err) => {
               this.error.set('Failed to search movies. Please try again.');
               console.error('Search error:', err);
-              return of({ page: 0, results: [], total_pages: 0, total_results: 0 } as SearchResponse);
-            })
+              return of({
+                page: 0,
+                results: [],
+                total_pages: 0,
+                total_results: 0,
+              } as SearchResponse);
+            }),
           );
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe((response) => {
         this.movies.set(response.results);
@@ -126,7 +119,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   protected onPageChange(page: number): void {
-    if (page < 1 || page > this.totalPages() || page === this.currentPage()) {
+    if (!isValidPageChange(page, this.currentPage(), this.totalPages())) {
       return;
     }
     this.currentPage.set(page);
@@ -194,38 +187,6 @@ export class SearchPageComponent implements OnInit {
   }
 
   protected getPageNumbers(): number[] {
-    const total = this.totalPages();
-    const current = this.currentPage();
-    const pages: number[] = [];
-
-    if (total <= 7) {
-      for (let i = 1; i <= total; i++) {
-        pages.push(i);
-      }
-    } else {
-      if (current <= 4) {
-        for (let i = 1; i <= 5; i++) {
-          pages.push(i);
-        }
-        pages.push(-1); 
-        pages.push(total);
-      } else if (current >= total - 3) {
-        pages.push(1);
-        pages.push(-1); 
-        for (let i = total - 4; i <= total; i++) {
-          pages.push(i);
-        }
-      } else {
-        pages.push(1);
-        pages.push(-1); 
-        for (let i = current - 1; i <= current + 1; i++) {
-          pages.push(i);
-        }
-        pages.push(-1); 
-        pages.push(total);
-      }
-    }
-
-    return pages;
+    return getPaginationPages(this.currentPage(), this.totalPages());
   }
 }
