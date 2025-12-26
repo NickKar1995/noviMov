@@ -6,7 +6,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CollectionsService } from '../../services/collections.service';
-import { MovieCollection } from '../../../../core/models/collection.model';
 import { Movie } from '../../../search-page/models/Movie';
 import {
   MovieCardComponent
@@ -14,6 +13,7 @@ import {
 import {
   MovieDetailsDialogComponent
 } from '../../../search-page/components/movie-details/movie-details-dialog.component';
+import { MovieCollection } from '../../models/MovieCollection';
 
 @Component({
   selector: 'app-collection-details-page',

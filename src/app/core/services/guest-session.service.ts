@@ -1,9 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { MovieService } from '../../features/search-page/services/movie.service';
+import { GUEST_SESSION_KEY, SESSION_EXPIRY_KEY } from '../Keys/Keys';
 
-const GUEST_SESSION_KEY = 'tmdb_guest_session';
-const SESSION_EXPIRY_KEY = 'tmdb_guest_session_expiry';
 
 @Injectable({
   providedIn: 'root',

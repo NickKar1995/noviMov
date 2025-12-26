@@ -3,6 +3,7 @@ import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@an
 
 @Directive({
   selector: '[appAlphanumeric]',
+  // Here I am using it as a validator with multi: true to allow multiple validators, in case I forget
   providers: [
     {
       provide: NG_VALIDATORS,
