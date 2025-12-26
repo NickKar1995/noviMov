@@ -16,7 +16,12 @@ import { MovieCardComponent } from './components/movie-card/movie-card.component
 import { AlphanumericDirective } from '../../core/directives/alphanumeric.directive';
 import { Movie } from './models/Movie';
 import { SearchResponse } from './models/SearchResponse';
-import { MovieDetailsDialogComponent } from './components/movie-details/movie-details-dialog.component';
+import {
+  MovieDetailsDialogComponent
+} from './components/movie-details/movie-details-dialog.component';
+import {
+  AddToCollectionDialogComponent
+} from './components/add-to-collection-dialog/add-to-collection-dialog.component';
 
 @Component({
   selector: 'app-search-page',
@@ -172,8 +177,20 @@ export class SearchPageComponent implements OnInit {
 
   protected onAddToCollection(): void {
     const selectedMoviesList = this.movies().filter((m) => this.selectedMovies().has(m.id));
-    // TODO: Open collection selection popup
-    console.log('Add to collection:', selectedMoviesList);
+    
+    const dialogRef = this.dialog.open(AddToCollectionDialogComponent, {
+      data: { movies: selectedMoviesList },
+      width: '600px',
+      maxWidth: '90vw',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result?.added) {
+        // Clear selection after successful addition
+        this.selectedMovies.set(new Set());
+        // Optionally show a success message or navigate
+      }
+    });
   }
 
   protected getPageNumbers(): number[] {

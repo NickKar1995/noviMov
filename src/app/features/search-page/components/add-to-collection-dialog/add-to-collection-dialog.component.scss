@@ -1,0 +1,65 @@
+.add-to-collection-dialog {
+  min-width: 500px;
+  max-width: 600px;
+  padding: 16px 16px 16px 0;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 16px 0;
+  }
+
+  &__title-icon {
+    color: #3f51b5;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: #555;
+    margin: 0 0 16px 0;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    p {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+    }
+  }
+
+  &__empty-icon {
+    font-size: 60px;
+    width: 60px;
+    height: 60px;
+    color: #999;
+  }
+
+  &__list {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  mat-dialog-content {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  mat-dialog-actions {
+    padding: 16px 0 0 0;
+    gap: 12px;
+  }
+}

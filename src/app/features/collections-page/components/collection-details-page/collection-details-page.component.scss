@@ -1,0 +1,132 @@
+.collection-details-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+
+  &__not-found {
+    text-align: center;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+    }
+
+    p {
+      font-size: 16px;
+      color: #666;
+      margin: 0 0 16px 0;
+    }
+  }
+
+  &__not-found-icon {
+    font-size: 80px;
+    width: 80px;
+    height: 80px;
+    color: #f44336;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  &__title-section {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    mat-icon {
+      font-size: 40px;
+      width: 40px;
+      height: 40px;
+      color: #3f51b5;
+    }
+  }
+
+  &__description {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+  }
+
+  &__meta {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__delete-btn {
+    flex-shrink: 0;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+    }
+
+    p {
+      font-size: 16px;
+      color: #666;
+      margin: 0 0 16px 0;
+    }
+  }
+
+  &__empty-icon {
+    font-size: 80px;
+    width: 80px;
+    height: 80px;
+    color: #999;
+  }
+
+  &__movies {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  &__movie-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__movie-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+  }
+}

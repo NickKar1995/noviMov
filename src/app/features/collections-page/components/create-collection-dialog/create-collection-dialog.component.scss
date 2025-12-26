@@ -1,0 +1,43 @@
+.create-collection-dialog {
+  min-width: 500px;
+  max-width: 600px;
+  padding: 16px 16px 16px 0;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 16px 0;
+  }
+
+  &__title-icon {
+    color: #3f51b5;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 8px 0;
+  }
+
+  &__field {
+    width: 100%;
+  }
+
+  mat-dialog-content {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  mat-dialog-actions {
+    padding: 16px 0 0 0;
+    gap: 12px;
+  }
+}

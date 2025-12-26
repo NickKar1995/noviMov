@@ -1,0 +1,70 @@
+<div class="collections-page">
+  <div class="collections-page__header">
+    <h1 class="collections-page__title">
+      <mat-icon class="collections-page__title-icon">collections</mat-icon>
+      My Movie Collections
+    </h1>
+    <button
+      class="collections-page__create-btn"
+      color="primary"
+      mat-raised-button
+      type="button"
+      (click)="onCreateCollection()"
+    >
+      <mat-icon>add</mat-icon>
+      Create Collection
+    </button>
+  </div>
+
+  @if (!hasCollections()) {
+    <div class="collections-page__empty">
+      <mat-icon class="collections-page__empty-icon">folder_open</mat-icon>
+      <h2>No Collections Yet</h2>
+      <p>Create your first collection to organize your favorite movies</p>
+      <button color="primary" mat-raised-button type="button" (click)="onCreateCollection()">
+        <mat-icon>add</mat-icon>
+        Create Your First Collection
+      </button>
+    </div>
+  }
+
+  @if (hasCollections()) {
+    <div class="collections-page__grid">
+      @for (collection of collections(); track collection.id) {
+        <mat-card
+          class="collections-page__card"
+          role="button"
+          tabindex="0"
+          (click)="onViewCollection(collection)"
+          (keydown.enter)="onViewCollection(collection)"
+        >
+          <mat-card-header>
+            <mat-icon mat-card-avatar>video_library</mat-icon>
+            <mat-card-title>{{ collection.title }}</mat-card-title>
+            <mat-card-subtitle>{{ formatDate(collection.createdAt) }}</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <p class="collections-page__description">
+              {{ collection.description || 'No description' }}
+            </p>
+
+            <mat-chip-set>
+              <mat-chip>
+                <mat-icon matChipAvatar>movie</mat-icon>
+                {{ getMovieCount(collection) }} movies
+              </mat-chip>
+            </mat-chip-set>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button color="primary" mat-button type="button">
+              <mat-icon>visibility</mat-icon>
+              View Collection
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  }
+</div>

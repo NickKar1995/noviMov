@@ -1,1 +1,31 @@
-<router-outlet />
+<header class="app-header">
+  <nav class="app-nav">
+    <a class="app-nav__brand" routerLink="/">
+      <mat-icon>movie</mat-icon>
+      <span>NoviMov</span>
+    </a>
+    <div class="app-nav__links">
+      <a
+        class="app-nav__link"
+        routerLink="/"
+        routerLinkActive="app-nav__link--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon>search</mat-icon>
+        <span>Search Movies</span>
+      </a>
+      <a
+        class="app-nav__link"
+        routerLink="/collections"
+        routerLinkActive="app-nav__link--active"
+      >
+        <mat-icon>collections</mat-icon>
+        <span>My Collections</span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<main class="app-content">
+  <router-outlet />
+</main>

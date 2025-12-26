@@ -1,0 +1,87 @@
+<div class="collection-details-page">
+  @if (notFound()) {
+    <div class="collection-details-page__not-found">
+      <mat-icon class="collection-details-page__not-found-icon">error_outline</mat-icon>
+      <h2>Collection Not Found</h2>
+      <p>The collection you're looking for doesn't exist or has been deleted.</p>
+      <button color="primary" mat-raised-button type="button" (click)="onBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Collections
+      </button>
+    </div>
+  }
+
+  @if (collection()) {
+    <div class="collection-details-page__content">
+      <div class="collection-details-page__header">
+        <button mat-icon-button type="button" (click)="onBack()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="collection-details-page__title-section">
+          <h1 class="collection-details-page__title">
+            <mat-icon>video_library</mat-icon>
+            {{ collection()!.title }}
+          </h1>
+          <p class="collection-details-page__description">
+            {{ collection()!.description || 'No description' }}
+          </p>
+          <div class="collection-details-page__meta">
+            <mat-chip-set>
+              <mat-chip>
+                <mat-icon matChipAvatar>movie</mat-icon>
+                {{ getMovieCount() }} movies
+              </mat-chip>
+              <mat-chip>
+                <mat-icon matChipAvatar>schedule</mat-icon>
+                Created {{ formatDate(collection()!.createdAt) }}
+              </mat-chip>
+            </mat-chip-set>
+          </div>
+        </div>
+        <button
+          class="collection-details-page__delete-btn"
+          color="warn"
+          mat-stroked-button
+          type="button"
+          (click)="onDeleteCollection()"
+        >
+          <mat-icon>delete</mat-icon>
+          Delete Collection
+        </button>
+      </div>
+
+      @if (getMovieCount() === 0) {
+        <div class="collection-details-page__empty">
+          <mat-icon class="collection-details-page__empty-icon">movie_filter</mat-icon>
+          <h2>No Movies Yet</h2>
+          <p>This collection is empty. Add movies from the search page.</p>
+          <button
+            color="primary"
+            mat-raised-button
+            routerLink="/"
+            type="button"
+          >
+            <mat-icon>search</mat-icon>
+            Go to Search
+          </button>
+        </div>
+      }
+
+      @if (getMovieCount() > 0) {
+        <div class="collection-details-page__movies">
+          @for (movie of collection()!.movies; track movie.id) {
+            <div class="collection-details-page__movie-wrapper">
+              <app-movie-card [movie]="movie" (movieClick)="onViewMovieDetails($event)" />
+              <div class="collection-details-page__movie-actions">
+                <button color="warn" mat-button type="button" (click)="onRemoveMovie(movie)">
+                  <mat-icon>remove_circle</mat-icon>
+                  Remove from Collection
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

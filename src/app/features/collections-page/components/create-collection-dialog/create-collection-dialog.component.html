@@ -1,0 +1,67 @@
+<div class="create-collection-dialog">
+  <h2 class="create-collection-dialog__title" mat-dialog-title>
+    <mat-icon class="create-collection-dialog__title-icon">add_circle</mat-icon>
+    Create New Collection
+  </h2>
+
+  <mat-dialog-content>
+    <form class="create-collection-dialog__form" [formGroup]="form">
+      <mat-form-field appearance="outline" class="create-collection-dialog__field">
+        <mat-label>Collection Title</mat-label>
+        <input
+          formControlName="title"
+          matInput
+          maxlength="50"
+          placeholder="e.g., My Favorite Sci-Fi Movies"
+          required
+          type="text"
+        />
+        <mat-icon matPrefix>title</mat-icon>
+        @if (form.controls.title.invalid && form.controls.title.touched) {
+          <mat-error>{{ getTitleError() }}</mat-error>
+        }
+        <mat-hint align="end">
+          {{ form.controls.title.value.length }} / 50
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="create-collection-dialog__field">
+        <mat-label>Description (Optional)</mat-label>
+        <textarea
+          formControlName="description"
+          matInput
+          maxlength="200"
+          placeholder="Describe your collection..."
+          rows="3"
+        ></textarea>
+        @if (form.controls.description.invalid && form.controls.description.touched) {
+          <mat-error>{{ getDescriptionError() }}</mat-error>
+        }
+        <mat-hint align="end">
+          {{ form.controls.description.value.length }} / 200
+        </mat-hint>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button
+      mat-button
+      type="button"
+      [disabled]="isSubmitting()"
+      (click)="onCancel()"
+    >
+      Cancel
+    </button>
+    <button
+      color="primary"
+      mat-raised-button
+      type="button"
+      [disabled]="form.invalid || isSubmitting()"
+      (click)="onSubmit()"
+    >
+      <mat-icon>check</mat-icon>
+      Create Collection
+    </button>
+  </mat-dialog-actions>
+</div>

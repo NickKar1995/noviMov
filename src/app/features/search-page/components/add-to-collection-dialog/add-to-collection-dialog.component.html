@@ -1,0 +1,56 @@
+<div class="add-to-collection-dialog">
+  <h2 class="add-to-collection-dialog__title" mat-dialog-title>
+    <mat-icon class="add-to-collection-dialog__title-icon">playlist_add</mat-icon>
+    Add to Collection
+  </h2>
+
+  <mat-dialog-content>
+    <p class="add-to-collection-dialog__subtitle">
+      Select a collection to add {{ getMovieCountText() }}
+    </p>
+
+    @if (!hasCollections()) {
+      <div class="add-to-collection-dialog__empty">
+        <mat-icon class="add-to-collection-dialog__empty-icon">folder_open</mat-icon>
+        <p>No collections found. Create a collection first.</p>
+      </div>
+    }
+
+    @if (hasCollections()) {
+      <mat-selection-list
+        class="add-to-collection-dialog__list"
+        [multiple]="false"
+        (selectionChange)="onSelectCollection($event.options[0].value)"
+      >
+        @for (collection of collections(); track collection.id) {
+          <mat-list-option [value]="collection.id">
+            <mat-icon matListItemIcon>video_library</mat-icon>
+            <div matListItemTitle>{{ collection.title }}</div>
+            <div matListItemLine>
+              {{ collection.movies.length }} movies
+              @if (collection.description) {
+                <span> • {{ collection.description }}</span>
+              }
+            </div>
+          </mat-list-option>
+        }
+      </mat-selection-list>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" [disabled]="isSubmitting()" (click)="onCancel()">
+      Cancel
+    </button>
+    <button
+      color="primary"
+      mat-raised-button
+      type="button"
+      [disabled]="!selectedCollectionId() || isSubmitting()"
+      (click)="onAdd()"
+    >
+      <mat-icon>add</mat-icon>
+      Add to Collection
+    </button>
+  </mat-dialog-actions>
+</div>
