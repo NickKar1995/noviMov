@@ -6,7 +6,7 @@ import { RatingResponse } from '../models/RatingResponse';
 import { SearchResponse } from '../models/SearchResponse';
 import { MovieDetails } from '../models/MovieDetails';
 import { GuestSessionResponse } from '../models/GuestSessionResponse';
-import { TMDB_API_KEY, TMDB_BASE_URL } from '../../../core/Tokens/EnvironmentToken';
+import { TMDB_BASE_URL } from '../../../core/Tokens/EnvironmentToken';
 
 @Injectable({
   providedIn: 'root',
@@ -14,34 +14,22 @@ import { TMDB_API_KEY, TMDB_BASE_URL } from '../../../core/Tokens/EnvironmentTok
 export class MovieService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = inject(TMDB_BASE_URL);
-  private readonly apiKey = inject(TMDB_API_KEY);
 
   searchMovies(query: string, page = 1): Observable<SearchResponse> {
-    const params = new HttpParams()
-      .set('api_key', this.apiKey)
-      .set('query', query)
-      .set('page', page.toString());
-
+    const params = new HttpParams().set('query', query).set('page', page.toString());
     return this.http.get<SearchResponse>(`${this.baseUrl}/search/movie`, { params });
   }
 
   getMovieDetails(movieId: number): Observable<MovieDetails> {
-    const params = new HttpParams().set('api_key', this.apiKey);
-    return this.http.get<MovieDetails>(`${this.baseUrl}/movie/${movieId}`, { params });
+    return this.http.get<MovieDetails>(`${this.baseUrl}/movie/${movieId}`);
   }
 
   createGuestSession(): Observable<GuestSessionResponse> {
-    const params = new HttpParams().set('api_key', this.apiKey);
-    return this.http.get<GuestSessionResponse>(`${this.baseUrl}/authentication/guest_session/new`, {
-      params,
-    });
+    return this.http.get<GuestSessionResponse>(`${this.baseUrl}/authentication/guest_session/new`);
   }
 
   rateMovie(movieId: number, guestSessionId: string, rating: number): Observable<RatingResponse> {
-    const params = new HttpParams()
-      .set('api_key', this.apiKey)
-      .set('guest_session_id', guestSessionId);
-
+    const params = new HttpParams().set('guest_session_id', guestSessionId);
     return this.http.post<RatingResponse>(
       `${this.baseUrl}/movie/${movieId}/rating`,
       { value: rating },
