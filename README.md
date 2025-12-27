@@ -106,13 +106,6 @@ The application uses Angular Material components for a modern, consistent UI:
 - **Progress Spinner** - Loading indicators
 - **Chips** - Selection count display
 
-### Material Theme
-
-The app uses a custom Material theme with:
-- Primary color: Indigo
-- Accent color: Pink
-- Pre-built Material typography
-- Responsive Material components
 
 ## 📝 Development Approach
 
@@ -123,22 +116,6 @@ The app uses a custom Material theme with:
 - ✅ Reactive forms with custom directives
 - ✅ Lazy loading routes
 - ✅ Modern Angular practices (input/output functions, computed signals)
-
-## 🎯 Next Steps
-
-The following features are planned for future development:
-
-1. **Movie Details Page**
-   - Modal/popup display
-   - Detailed movie information
-   - User rating functionality
-   - Guest session management
-
-2. **Collections Management**
-   - Create/edit/delete collections
-   - Add movies to collections
-   - View collection contents
-   - Local storage persistence
 
 ## 📄 License
 
