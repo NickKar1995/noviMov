@@ -1,59 +1,145 @@
-# NoviMov
+# noviMov - Movie Search & Collections
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.1.
+A modern Angular application for searching, displaying, and organizing movies into custom collections using the TMDB API.
 
-## Development server
+## 🚀 Getting Started
 
-To start a local development server, run:
+### Prerequisites
 
-```bash
-ng serve
+- Node.js (v18 or higher)
+- npm or yarn
+- TMDB API Key (free account at https://www.themoviedb.org/settings/api)
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. **Configure TMDB API Key:**
+   
+   Open `src/environments/environment.development.ts` and replace `YOUR_TMDB_API_KEY_HERE` with your actual TMDB API key:
+   
+   ```typescript
+   export const environment = {
+     production: false,
+     tmdb: {
+       apiKey: 'your_actual_api_key_here',
+       baseUrl: 'https://api.themoviedb.org/3',
+       imageBaseUrl: 'https://image.tmdb.org/t/p'
+     }
+   };
+   ```
+
+4. Start the development server:
+   ```bash
+   npm start
+   ```
+
+5. Open your browser at `http://localhost:4200`
+
+## 📋 Features Implemented
+
+### ✅ Search Page (Home Page)
+
+- **Search Input with Custom Validation**
+  - Minimum 3 characters required
+  - Only alphanumeric characters and spaces allowed
+  - Custom Angular directive for validation (`AlphanumericDirective`)
+  - Real-time validation feedback
+
+- **Movie Results Display**
+  - Paginated results
+  - Each movie card shows:
+    - Poster image
+    - Title
+    - Vote average (rating)
+  - Clickable cards to navigate to movie details
+  - Checkbox selection for adding to collections
+
+- **Features**
+  - Debounced search (500ms) to reduce API calls
+  - Responsive grid layout
+  - Loading states
+  - Error handling
+  - Smart pagination with ellipsis
+  - Multi-select movies for collection management
+
+## 🏗️ Project Structure
+
+```
+src/app/
+├── components/
+│   └── movie-card/              # Reusable movie card component
+├── directives/
+│   └── alphanumeric.directive.ts # Custom validation directive
+├── models/
+│   └── movie.model.ts            # TypeScript types
+├── pages/
+│   └── search-page/              # Search page component
+├── services/
+│   └── movie.service.ts          # TMDB API service
+└── environments/                 # Environment configuration
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🔧 Technologies Used
 
-## Code scaffolding
+- **Angular 20** (Standalone Components)
+- **Angular Material** (UI Components & Theming)
+- **TypeScript** (Strict mode)
+- **RxJS** (Reactive programming)
+- **Signals** (State management)
+- **SCSS** (Styling)
+- **TMDB API** (Movie data)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🎨 UI Components
 
-```bash
-ng generate component component-name
-```
+The application uses Angular Material components for a modern, consistent UI:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- **Form Fields & Input** - Material form controls with validation
+- **Buttons** - Raised and flat Material buttons
+- **Cards** - Movie cards with Material card component
+- **Checkboxes** - Material checkboxes for movie selection
+- **Icons** - Material Design icons
+- **Progress Spinner** - Loading indicators
+- **Chips** - Selection count display
 
-```bash
-ng generate --help
-```
+### Material Theme
 
-## Building
+The app uses a custom Material theme with:
+- Primary color: Indigo
+- Accent color: Pink
+- Pre-built Material typography
+- Responsive Material components
 
-To build the project run:
+## 📝 Development Approach
 
-```bash
-ng build
-```
+- ✅ Standalone components (no NgModules)
+- ✅ Signal-based state management
+- ✅ OnPush change detection strategy
+- ✅ Type-safe API calls
+- ✅ Reactive forms with custom directives
+- ✅ Lazy loading routes
+- ✅ Modern Angular practices (input/output functions, computed signals)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🎯 Next Steps
 
-## Running unit tests
+The following features are planned for future development:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+1. **Movie Details Page**
+   - Modal/popup display
+   - Detailed movie information
+   - User rating functionality
+   - Guest session management
 
-```bash
-ng test
-```
+2. **Collections Management**
+   - Create/edit/delete collections
+   - Add movies to collections
+   - View collection contents
+   - Local storage persistence
 
-## Running end-to-end tests
+## 📄 License
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project is for educational purposes.
