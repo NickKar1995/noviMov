@@ -146,7 +146,6 @@ export class SearchPageComponent {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      // Remove movieId query param when dialog closes
       this.router.navigate([], {
         relativeTo: this.route,
         queryParams: { movieId: null },
@@ -179,9 +178,7 @@ export class SearchPageComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.added) {
-        // Clear selection after successful addition
         this.selectedMovies.set(new Set());
-        // Optionally show a success message or navigate
       }
     });
   }

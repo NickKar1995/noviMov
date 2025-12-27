@@ -8,7 +8,6 @@
 export function getPaginationPages(currentPage: number, totalPages: number): number[] {
   const pages: number[] = [];
 
-  // If total pages are 7 or less, show all pages
   if (totalPages <= 7) {
     for (let i = 1; i <= totalPages; i++) {
       pages.push(i);
@@ -16,33 +15,30 @@ export function getPaginationPages(currentPage: number, totalPages: number): num
     return pages;
   }
 
-  // If current page is in the first 4 pages
   if (currentPage <= 4) {
     for (let i = 1; i <= 5; i++) {
       pages.push(i);
     }
-    pages.push(-1); // Ellipsis
+    pages.push(-1);
     pages.push(totalPages);
     return pages;
   }
 
-  // If current page is in the last 4 pages
   if (currentPage >= totalPages - 3) {
     pages.push(1);
-    pages.push(-1); // Ellipsis
+    pages.push(-1);
     for (let i = totalPages - 4; i <= totalPages; i++) {
       pages.push(i);
     }
     return pages;
   }
 
-  // Current page is in the middle
   pages.push(1);
-  pages.push(-1); // Ellipsis
+  pages.push(-1);
   for (let i = currentPage - 1; i <= currentPage + 1; i++) {
     pages.push(i);
   }
-  pages.push(-1); // Ellipsis
+  pages.push(-1);
   pages.push(totalPages);
 
   return pages;

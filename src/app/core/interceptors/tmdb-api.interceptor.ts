@@ -12,17 +12,14 @@ export const tmdbApiInterceptor: HttpInterceptorFn = (req, next) => {
   const apiKey = inject(TMDB_API_KEY);
   const baseUrl = inject(TMDB_BASE_URL);
 
-  // Only intercept TMDB API requests
   if (!req.url.startsWith(baseUrl)) {
     return next(req);
   }
 
-  // Check if api_key is already present
   if (req.params.has('api_key')) {
     return next(req);
   }
 
-  // Clone request and add api_key parameter
   const modifiedReq = req.clone({
     params: req.params.set('api_key', apiKey),
   });
